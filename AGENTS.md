@@ -8,7 +8,7 @@ One-click enabler scripts for Chrome's built-in Gemini sidebar (Glic) for non-US
 
 - `install.sh` — macOS/Linux enabler (bash, `set -e`, interactive)
 - `install.ps1` — Windows enabler (PowerShell, must stay Windows PowerShell 5 compatible)
-- `README.md` — user-facing docs: install commands, restore commands, per-OS config paths
+- `README.md` — user-facing docs **in Chinese**: install commands (incl. jsDelivr mirrors), daily use, restore commands, troubleshooting, per-OS config paths. Keep it Chinese when editing.
 
 ## How the patch works
 
