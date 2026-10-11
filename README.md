@@ -10,12 +10,24 @@ One-click script to enable Chrome's built-in Gemini AI features for non-US users
 curl -fsSL https://raw.githubusercontent.com/hzjsj/Gemini-in-Chrome/main/install.sh | bash
 ```
 
+`raw.githubusercontent.com` is blocked in some regions — if the command hangs, use the jsDelivr mirror:
+
+```bash
+curl -fsSL https://cdn.jsdelivr.net/gh/hzjsj/Gemini-in-Chrome@main/install.sh | bash
+```
+
 ### Windows
 
 Open PowerShell and run:
 
 ```powershell
 irm https://raw.githubusercontent.com/hzjsj/Gemini-in-Chrome/main/install.ps1 | iex
+```
+
+If that URL is unreachable, use the jsDelivr mirror:
+
+```powershell
+irm https://cdn.jsdelivr.net/gh/hzjsj/Gemini-in-Chrome@main/install.ps1 | iex
 ```
 
 ## What It Does
