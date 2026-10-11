@@ -7,7 +7,7 @@ One-click script to enable Chrome's built-in Gemini AI features for non-US users
 ### macOS / Linux
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/appsail/Gemini-in-Chrome/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/hzjsj/Gemini-in-Chrome/main/install.sh | bash
 ```
 
 ### Windows
@@ -15,7 +15,7 @@ curl -fsSL https://raw.githubusercontent.com/appsail/Gemini-in-Chrome/main/insta
 Open PowerShell and run:
 
 ```powershell
-irm https://raw.githubusercontent.com/appsail/Gemini-in-Chrome/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/hzjsj/Gemini-in-Chrome/main/install.ps1 | iex
 ```
 
 ## What It Does
@@ -97,7 +97,7 @@ Move-Item -Path "$env:LOCALAPPDATA\Google\Chrome\User Data\Local State.bak" `
 
 ## Issues
 
-Found a bug? [Open an issue](https://github.com/appsail/Gemini-in-Chrome/issues).
+Found a bug? [Open an issue](https://github.com/hzjsj/Gemini-in-Chrome/issues).
 
 ## License
 

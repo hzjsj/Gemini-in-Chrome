@@ -23,7 +23,7 @@ case "$OS_TYPE" in
         ;;
     *)
         echo "💡 Windows users, please run this PowerShell command instead:"
-        echo "irm https://raw.githubusercontent.com/user/Gemini-in-Chrome/main/install.ps1 | iex"
+        echo "irm https://raw.githubusercontent.com/hzjsj/Gemini-in-Chrome/main/install.ps1 | iex"
         exit 1
         ;;
 esac
@@ -41,7 +41,9 @@ if check_chrome_running; then
         echo "📌 Please quit Chrome completely before proceeding"
     fi
     echo ""
-    read -p "Press Enter after closing Chrome... " -r
+    # Read from the terminal, not stdin: when piped (curl | bash) stdin is the
+    # script itself, and a plain `read` would swallow the remaining lines.
+    read -r -p "Press Enter after closing Chrome... " < /dev/tty 2>/dev/null || true
     echo ""
 
     if check_chrome_running; then
