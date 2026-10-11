@@ -44,7 +44,7 @@ The target is Chrome's `Local State` JSON file (paths per OS are in the README).
 
 - `install.sh` uses `set -e` plus a `read -p` prompt: it is interactive. When piped (README suggests `curl | bash`), `read` consumes the *remaining script lines* as its input, skipping the Chrome-running check and any code after it.
 - `((errors++))` is guarded with `|| true` because with `set -e` a post-increment from 0 returns exit status 1 and would abort the script.
-- The "Windows users" message in `install.sh` (~line 26) points at `user/Gemini-in-Chrome` while the README uses `appsail/Gemini-in-Chrome` — known inconsistency if you touch that line.
+- Install URLs point at `hzjsj/Gemini-in-Chrome` everywhere (README + install.sh, fixed 2026-10-11). `install.sh` prompts read from `/dev/tty` so `curl | bash` no longer swallows the rest of the script.
 - Verification only checks 2 of the 3 patched fields (`variations_permanent_consistency_country` is not re-grepped).
 
 ## Local user environment (for testing)
