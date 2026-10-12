@@ -8,6 +8,8 @@ One-click enabler scripts for Chrome's built-in Gemini sidebar (Glic) for non-US
 
 - `install.sh` — macOS/Linux enabler (bash, `set -e`, interactive)
 - `install.ps1` — Windows enabler (PowerShell, must stay Windows PowerShell 5 compatible)
+- `launch-glic.sh` — daily launcher (macOS/Linux): re-asserts Local State fields, relaunches Chrome with the override flags
+- `check-region.sh` — correlated geo pre-filter: probes `google.com` redirect + seed-server `x-country` header
 - `README.md` — user-facing docs **in Chinese**: install commands (incl. jsDelivr mirrors), daily use, restore commands, troubleshooting, per-OS config paths. Keep it Chinese when editing.
 
 ## How the patch works
@@ -40,6 +42,8 @@ The target is Chrome's `Local State` JSON file (paths per OS are in the README).
 - `launch-glic.sh` re-asserts the Local State fields (JSON-validated) and relaunches Chrome with the override flags — the user's daily launcher.
 - **Deepest gate (found last): the Gemini backend's own geo verdict.** The user's first "US" node exited via CTG Server (China Telecom Global) — ipinfo says US, but Google geo systems treated it as CN: `https://www.google.com/` 302-redirects to `google.com.hk`, seed server returned `x-country: cn`, and the panel showed the server-driven "not launched in your region" string (which is NOT in Chrome's locale paks). Switching to a native-IP exit (ByteVirt SG) fixed it even though the seed server *still* reports `x-country: cn` for it — **the variations geo, google.com redirect geo, and the Gemini backend geo are different systems that disagree**. `check-region.sh` (google.com redirect + x-country probes) is a correlated pre-filter, not an authoritative verdict: ✅ basically means usable, ❌ does not necessarily block. Working combo as of 2026-10-11: `launch-glic.sh` + ByteVirt SG native-IP node + signed-in account + zh-CN UI (no language gate on Chrome 154).
 
+**Windows validated (2026-10-12):** `install.ps1` worked as-is on Windows 10 Enterprise LTSC + Chrome 155.0.8059.40 (path `%LOCALAPPDATA%\Google\Chrome\User Data\Local State`; only 1 profile, so 1 occurrence of `is_glic_eligible`). `variations_country` was already `"us"` from a prior fetch, so only `is_glic_eligible` needed patching. Chrome was launched with `--variations-override-country=us --enable-features=Glic` and the sidebar worked on a **KR exit IP** — the Gemini backend geo gate is not US-only; Korea (and likely other launched markets) passes. Backup/verify flow: re-grepped the field and re-validated the whole file with `ConvertFrom-Json` after patching.
+
 ## Scripting gotchas
 
 - `install.sh` uses `set -e` plus a `read -p` prompt: it is interactive. When piped (README suggests `curl | bash`), `read` consumes the *remaining script lines* as its input, skipping the Chrome-running check and any code after it.
@@ -51,3 +55,4 @@ The target is Chrome's `Local State` JSON file (paths per OS are in the README).
 
 - macOS; Chrome 154.0.8037.98; config at `~/Library/Application Support/Google/Chrome/Local State`; unpatched fields are `is_glic_eligible: false` and `variations_country: "cn"`.
 - After patching, the user must fully restart Chrome; the Gemini icon then appears in the toolbar. Using Gemini still requires access to Google services.
+- Windows 10 Enterprise LTSC 2021; Chrome 155.0.8059.40; config at `%LOCALAPPDATA%\Google\Chrome\User Data\Local State`. Second validated machine (2026-10-12, see Windows gotcha above).
