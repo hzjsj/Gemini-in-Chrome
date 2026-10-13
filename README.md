@@ -54,6 +54,16 @@ bash launch-glic.sh
 bash check-region.sh   # 换节点后重新运行，直到结果显示可用
 ```
 
+## 日常使用（Windows）
+
+`install.ps1` 用于修改一次 Chrome 配置，不需要每次启动都运行。Chrome 完全退出或电脑重启后，请用带覆盖参数的方式启动 Chrome；这些参数只对本次启动有效。先保存工作并彻底退出 Chrome，再在 PowerShell 执行：
+
+```powershell
+Start-Process 'C:\Program Files\Google\Chrome\Application\chrome.exe' -ArgumentList '--variations-override-country=us','--enable-features=Glic'
+```
+
+此命令已在 Windows 10 Enterprise LTSC、Chrome 155 和韩国出口 IP 环境下验证可用。若仍看到「无法使用 Chrome 中的 Gemini」或地区提示，在地址栏打开 `chrome://version`，确认“命令行”包含 `--variations-override-country=us` 和 `--enable-features=Glic`。如果参数已生效仍无法使用，请确认 Google 账号及代理出口；Chrome 本地补丁和启动参数不能覆盖 Google 服务端的地区或账号开放限制。不要在 Chrome 运行时执行 `install.ps1`。
+
 ## 脚本一览
 
 | 脚本 | 作用 |
